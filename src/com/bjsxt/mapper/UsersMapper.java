@@ -2,6 +2,7 @@ package com.bjsxt.mapper;
 
 import com.bjsxt.pojo.Users;
 import org.apache.ibatis.annotations.*;
+import org.apache.ibatis.mapping.FetchType;
 
 import java.util.List;
 import java.util.Map;
@@ -76,4 +77,24 @@ public interface UsersMapper {
     @Select("select userid as id,username as name,usersex as sex from users where userid = #{userid}")
     @ResultMap(value = {"usersMapper"})
     Users selectUsersByIdMapper2(int userid);
+
+    //一对一查询
+    @Results(id = "usersAndRolesMapper",value = {
+            @Result(id = true,property = "userid",column = "userid"),
+            @Result(property = "username",column = "username"),
+            @Result(property = "usersex",column = "usersex"),
+            @Result(property = "roles",column = "userid",one = @One(select = "com.bjsxt.mapper.RolesMapper.selectRolesByUsersId",fetchType = FetchType.LAZY))
+    })
+    @Select("select * from users where userid = #{userid}")
+    Users selectUsersAndRolesByUserId(int userid);
+
+    //一对多查询
+    @Select("select * from users where userid = #{userid}")
+    @Results(id="usersAndOrdersMapper",value = {
+            @Result(id = true,property = "userid",column = "userid"),
+            @Result(property = "username",column = "username"),
+            @Result(property = "usersex",column = "usersex"),
+            @Result(property = "orders",column = "userid",many = @Many(select = "com.bjsxt.mapper.OrdersMapper.selectOrdersByUserId",fetchType = FetchType.LAZY))
+    })
+    Users selectUsersAndOrdersByUserId(int userid);
 }

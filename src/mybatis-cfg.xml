@@ -6,6 +6,7 @@
     <!--引入db.properties属性文件-->
     <properties resource="db.properties"/>
 
+    <!--延迟加载-->
     <settings>
         <setting name="lazyLoadTriggerMethods" value=""/>
     </settings>

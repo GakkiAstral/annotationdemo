@@ -1,9 +1,31 @@
 package com.bjsxt.pojo;
 
+import java.util.List;
+
 public class Users {
     private int userid;
     private String username;
     private String usersex;
+
+    private Roles roles;
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }
+
+    private List<Orders> orders;
+
+    public Roles getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Roles roles) {
+        this.roles = roles;
+    }
 
     @Override
     public String toString() {
